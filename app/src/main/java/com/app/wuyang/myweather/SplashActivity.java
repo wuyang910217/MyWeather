@@ -7,11 +7,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.app.wuyang.myweather.sync.HandleCityTask;
 
 
 public class SplashActivity extends AppCompatActivity {
 
     private MyHandler myHandler;
+    private HandleCityTask task;
+    private final static String URI_CITY=
+            "http://www.pm25.in/api/querys.json?token=5j1znBVAsnSf5xQyNQyq";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -19,6 +23,9 @@ public class SplashActivity extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.layout_splash);
 
+
+        task=new HandleCityTask(getApplicationContext());
+        task.execute(URI_CITY);
         myHandler =new MyHandler();
         myHandler.sendEmptyMessageDelayed(0, 3000);
 
