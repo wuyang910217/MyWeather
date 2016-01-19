@@ -11,13 +11,14 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@drawable/circle_image"/>
+            android:background="@drawable/circle_image"
+            android:contentDescription="@string/drawer_icon"/>
 
 
         <TextView
-            android:onClick="openNew"
-            android:text="舞"
-            android:textSize="35dp"
+            android:onClick="openDetail"
+            android:text="@string/drawer_textView"
+            android:textSize="35sp"
             android:padding="2dp"
             android:gravity="center"
             android:layout_width="match_parent"

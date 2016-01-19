@@ -1,4 +1,4 @@
-package com.app.wuyang.myweather.sync;
+package com.app.wuyang.myweather.adapter;
 
 
 import android.support.v7.widget.RecyclerView;

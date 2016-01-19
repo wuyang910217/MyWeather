@@ -7,20 +7,24 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by wuyang on 16-1-5.
+ * 数据库 包括两个表 空气质量信息  和   有空气质量信息的城市；
  */
-public class MyWeatherDbHelper extends SQLiteOpenHelper {
+public class AirQualityDbHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION=1;
-    static final String DATABASE_NAME="MyWeather.db";
+
+    private static final int DATABASE_VERSION=2;
+    static final String DATABASE_NAME="airquality.db";
     private static final String TABLE_NAME_ALL_CITY = "allcity";
     private static final String TABLE_NAME_AIR_QUALITY = "air_quality";
+    private static final String TABLE_NAME_CITIES = "city";
+    private static final String TABLE_NAME_WEATHER = "weather";
 
-//    public MyWeatherDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+//    public AirQualityDbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
 //        super(context, name, factory, version);
 //    }
 
-    public MyWeatherDbHelper(Context context) {
-        super(context,DATABASE_NAME,null,DATABASE_VERSION);
+    public AirQualityDbHelper(Context context) {
+        super(context,DbDir.getDbName(context,DATABASE_NAME),null,DATABASE_VERSION);
     }
 
     @Override
@@ -32,7 +36,6 @@ public class MyWeatherDbHelper extends SQLiteOpenHelper {
                 + "id integer primary key autoincrement,"
                 + "city text,"
                 + "co real,"
-                + "co2 real,"
                 + "no2 real,"
                 + "so2 real,"
                 + "o3 real,"
@@ -52,7 +55,7 @@ public class MyWeatherDbHelper extends SQLiteOpenHelper {
                 + ");";
 
 
-//        db.execSQL(SQL_CREATE_AIR_QUALITY_TABLE);
+        db.execSQL(SQL_CREATE_AIR_QUALITY_TABLE);
         db.execSQL(SQL_CREATE_ALL_CITY_TABLE);
 
 
@@ -61,8 +64,8 @@ public class MyWeatherDbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("DROP TABLE IF EXISTS" + TABLE_NAME_AIR_QUALITY);
-//        db.execSQL("DROP TABLE IF EXISTS" + TABLE_NAME_ALL_CITY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_AIR_QUALITY);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_ALL_CITY);
         onCreate(db);
     }
 }

@@ -1,13 +1,46 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">我的天气</string>
 
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="show_detail">查看详细信息</string>
 
-    <string name="title_activity_splash">SplashActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+<!--layout_splash-->
+    <string name="splash_title">我的天气</string>
+    <string name="splash_subtitle">拥有好天气  拥抱好心情</string>
+    <string name="splash_bottom_text">By Wuyang----Version 1.0</string>
+    <string name="splash_loading" tools:ignore="TypographyEllipsis">数据加载中...</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <!-- layout_drawer_item-->
+    <string name="item_icon">Icon</string>
+
+    <!-- layout_drawer-->
+    <string name="drawer_icon">Icon</string>
+    <string name="drawer_textView">舞</string>
+
+
+    <!-- layout_detail-->
+    <string name="detail_weather_day">白天天气状况</string>
+    <string name="detail_weather_night">夜晚天气状况</string>
+    <string name="detail_temp_day">白天气温</string>
+    <string name="detail_temp_night">晚上气温</string>
+    <string name="detail_weather_index1">晨练指数</string>
+    <string name="detail_weather_index2">舒适度指数</string>
+    <string name="detail_weather_index3">穿衣指数</string>
+    <string name="detail_sun_raise">日出日落</string>
+    <string name="detail_publish_time">发布时间</string>
+
+    <string name="detail_air_quality">空气质量</string>
+    <string name="detail_pollutant">首要污染物</string>
+    <string name="detail_pm25">PM2.5含量</string>
+    <string name="detail_pm10">PM10含量</string>
+    <string name="detail_o3">臭氧含量</string>
+    <string name="detail_so2">二氧化硫含量</string>
+    <string name="detail_no2">二氧化氮含量</string>
+    <string name="detail_co">一氧化碳含量</string>
+
+    <string name="detail_county_name">县/区</string>
+    <string name="detail_city_name">城市</string>
+
+
 </resources>

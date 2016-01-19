@@ -4,13 +4,14 @@ import java.io.Serializable;
 
 /**
  * Created by wuyang on 16-1-7.
+ * 空气质量信息的实体类
  */
 public class AirQuality implements Serializable {
 
     private int id;
     private int so2;
     private int no2;
-    private int co;
+    private Double co;
     private int o3;
     private int pm25;
     private int pm10;
@@ -23,7 +24,7 @@ public class AirQuality implements Serializable {
         super();
     }
 
-    public AirQuality(int id, int so2, int no2, int co,
+    public AirQuality(int id, int so2, int no2, Double co,
                       int o3, int pm25, int pm10, String city,
                       String pollutant, String quality, String time) {
         this.id = id;
@@ -80,11 +81,11 @@ public class AirQuality implements Serializable {
         this.no2 = no2;
     }
 
-    public int getCo() {
+    public Double getCo() {
         return co;
     }
 
-    public void setCo(int co) {
+    public void setCo(double co) {
         this.co = co;
     }
 

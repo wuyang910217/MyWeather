@@ -1,4 +1,4 @@
-package com.app.wuyang.myweather;
+package com.app.wuyang.myweather.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,12 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.wuyang.myweather.R;
 import com.app.wuyang.myweather.data.DrawerData;
 
 import java.util.List;
 
 /**
  * Created by wuyang on 16-1-1.
+ * 侧边栏ListView的adapter；
  */
 public class DrawerAdapter extends ArrayAdapter<DrawerData> {
     private int resourceId;

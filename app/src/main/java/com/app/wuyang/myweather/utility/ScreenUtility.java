@@ -7,6 +7,7 @@ import android.view.WindowManager;
 
 /**
  * Created by wuyang on 16-1-3.
+ * 提供屏幕尺寸的工具类
  */
 public class ScreenUtility {
 

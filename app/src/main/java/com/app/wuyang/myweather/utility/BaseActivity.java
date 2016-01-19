@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by wuyang on 16-1-3.
+ * 作为其他activity的父类，提供全局退出功能，并能log输出当前在哪个子activity；
  */
 public class BaseActivity extends AppCompatActivity {
 

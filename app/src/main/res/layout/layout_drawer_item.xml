@@ -8,13 +8,14 @@
         android:id="@+id/mImage"
         android:layout_width="0dp"
         android:layout_weight="2"
-        android:layout_gravity="left|center_vertical"
-        android:layout_height="25dp"/>
+        android:layout_gravity="start|center_vertical"
+        android:layout_height="25dp"
+        android:contentDescription="@string/item_icon"/>
 
     <TextView
-        android:gravity="left|center_vertical"
+        android:gravity="start|center_vertical"
         android:id="@+id/mItem"
-        android:textSize="15dp"
+        android:textSize="15sp"
         android:layout_width="0dp"
         android:layout_weight="5"
         android:layout_height="50dp"/>
