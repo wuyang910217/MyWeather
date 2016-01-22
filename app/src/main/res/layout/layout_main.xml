@@ -5,17 +5,6 @@
               android:layout_height="match_parent">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ProgressBar
-            android:id="@+id/main_progressbar"
-            android:visibility="gone"
-            android:indeterminate="false"
-            android:indeterminateDrawable="@drawable/loading_progressbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </FrameLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
         android:layout_height="280dp">
 
         <include layout="@layout/layout_cardview_item_today"/>
@@ -28,11 +17,11 @@
         <!--</android.support.v7.widget.RecyclerView>-->
     </FrameLayout>
 
-    <FrameLayout
+    <ListView
+        android:id="@+id/item_list_main"
         android:layout_width="match_parent"
         android:layout_weight="1"
         android:layout_height="0dp">
-        <include layout="@layout/layout_cardview_item"/>
         <!--<android.support.v7.widget.RecyclerView-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent"-->
@@ -40,7 +29,7 @@
             <!-->-->
 
         <!--</android.support.v7.widget.RecyclerView>-->
-    </FrameLayout>
+    </ListView>
 
 
 

@@ -1,15 +1,12 @@
 package com.app.wuyang.myweather.utility;
 
-import com.app.wuyang.myweather.db.WeatherHelper;
+import com.app.wuyang.myweather.R;
 
 /**
  * Created by wuyang on 16-1-15.
  * 把数据库中的天气描述的字符   转换为对应的天气信息
  */
 public class WeatherTransformUtils {
-
-    private WeatherHelper helper;
-
 
     private static final String sunnyDescribe ="00";
     private static final String cloudyDescribe="01";
@@ -102,7 +99,7 @@ public class WeatherTransformUtils {
     private static final String west="西风";
     private static final String northWest="西北风";
     private static final String north="北风";
-    private static final String whirlWinde="旋转风";
+    private static final String whirlWind="旋转风";
 
 
     private static final String windPower03Describe="0";
@@ -151,6 +148,79 @@ public class WeatherTransformUtils {
                 return windPower1112;
             default:
                 return null;
+        }
+    }
+
+    public int tranWeatherIcon(String weather){
+        switch (weather){
+            case sunnyDescribe:
+                return R.drawable.weather_00;
+            case cloudyDescribe:
+                return R.drawable.weather_01;
+            case overcastDescribe:
+                return R.drawable.weather_02;
+            case showerDescribe:
+                return R.drawable.weather_03;
+            case thunderShowerDescribe:
+                return R.drawable.weather_04;
+            case thunderShowerWithHailDescribe:
+                return R.drawable.weather_05;
+            case sleetDescribe:
+                return R.drawable.weather_06;
+            case lightRainDescribe:
+                return R.drawable.weather_07;
+            case moderateRainDescribe:
+                return R.drawable.weather_08;
+            case heavyRainDescribe:
+                return R.drawable.weather_09;
+            case stormDescribe:
+                return R.drawable.weather_10;
+            case heavyStormDescribe:
+                return R.drawable.weather_11;
+            case severeStormDescribe:
+                return R.drawable.weather_12;
+            case snowFlurryDescribe:
+                return R.drawable.weather_13;
+            case lightSnowDescribe:
+                return R.drawable.weather_14;
+            case moderateSnowDescribe:
+                return R.drawable.weather_15;
+            case heavySnowDescribe:
+                return R.drawable.weather_16;
+            case snowStormDescribe:
+                return R.drawable.weather_17;
+            case foggyDescribe:
+                return R.drawable.weather_18;
+            case iceRainDescribe:
+                return R.drawable.weather_19;
+            case dustStormDescribe:
+                return R.drawable.weather_20;
+            case lightToModerateRainDescribe:
+                return R.drawable.weather_21;
+            case moderateToHeavyRainDescribe:
+                return R.drawable.weather_22;
+            case heavyRainToStormDescribe:
+                return R.drawable.weather_23;
+            case stormToHeavyStormDescribe:
+                return R.drawable.weather_24;
+            case heavyToSevereStormDescribe:
+                return R.drawable.weather_25;
+            case lightToModerateSnowDescribe:
+                return R.drawable.weather_26;
+            case moderateToHeavySnowDescribe:
+                return R.drawable.weather_27;
+            case heavySnowToSnowStormDescribe:
+                return R.drawable.weather_28;
+            case dustDescribe:
+                return R.drawable.weather_29;
+            case sandDescribe:
+                return R.drawable.weather_30;
+            case sandStormDescribe:
+                return R.drawable.weather_31;
+            case hazeDescribe:
+                return R.drawable.weather_53;
+            default:
+                return R.drawable.weather_undefined;
         }
     }
 
@@ -244,7 +314,7 @@ public class WeatherTransformUtils {
             case northDescribe:
                 return north;
             case whirlWindDescribe:
-                return whirlWinde;
+                return whirlWind;
             default:
                 return null;
         }

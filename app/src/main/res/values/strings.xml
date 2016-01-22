@@ -13,10 +13,21 @@
 
     <!-- layout_drawer_item-->
     <string name="item_icon">Icon</string>
+    <string name="item_weather">未来七天</string>
+    <string name="item_address">详细地址</string>
+    <string name="item_good">好心情</string>
+    <string name="item_share">点赞</string>
+    <string name="item_setting">设置</string>
 
     <!-- layout_drawer-->
     <string name="drawer_icon">Icon</string>
     <string name="drawer_textView">舞</string>
+
+    <!-- menu_main-->
+    <string name="menu_refresh">刷新</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_exit">退出</string>
+    <string name="menu_share">分享</string>
 
 
     <!-- layout_detail-->

@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ProgressBar;
 
+import com.app.wuyang.myweather.activity.MainActivity;
 import com.app.wuyang.myweather.data.AirQuality;
 import com.app.wuyang.myweather.data.LocationInfo;
 import com.app.wuyang.myweather.data.WeatherIndex;
@@ -24,6 +25,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.app.wuyang.myweather.activity.MainActivity.*;
 
 /**
  * Created by wuyang on 16-1-8.
@@ -54,6 +57,19 @@ public class HandleAirQualityAndWeatherTask extends AsyncTask<Void,Void,Void>{
         cityOfChinaHelper=new AllCityOfChinaHelper(mContext);
         helper= AirQualityHelper.getInstance(mContext);
         weatherHelper=new WeatherHelper(mContext);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+        super.onPostExecute(aVoid);
+
+
+
     }
 
     @Override
@@ -102,7 +118,7 @@ public class HandleAirQualityAndWeatherTask extends AsyncTask<Void,Void,Void>{
 
 
         List<String> allCityOfChinaList =cityOfChinaHelper.loadAllInfo();
-        if (allCityOfChinaList!=null){
+        if (allCityOfChinaList.size()!=0){
             LogUtility.d("abc", "检查中国省市县数据库共有----" + allCityOfChinaList.size() + "行...."
                     + "随机测试一个城市：" + allCityOfChinaList.get(100));
         } else {
@@ -222,7 +238,7 @@ public class HandleAirQualityAndWeatherTask extends AsyncTask<Void,Void,Void>{
     private Long getAreaId(LocationInfo locationInfo){
         List<String> stringList =cityOfChinaHelper.loadAllInfo();
 
-        if (stringList==null){
+        if (stringList.size()==0){
             LogUtility.d("abc","说明省市县数据库中没有数据。。。直接返回");
             return null;
         }else {

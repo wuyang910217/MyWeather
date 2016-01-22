@@ -4,6 +4,8 @@
     <color name="divider_color">#5867c2</color>
     <color name="white_color">#ffffffff</color>
 
+    <color name="cardview_press">#7bc2c1</color>
+
     <color name="good_quality">#ff05ff0f</color>
     <color name="not_bad_quality">#fffff125</color>
     <color name="bad_quality">#ffff910a</color>

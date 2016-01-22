@@ -6,9 +6,9 @@ package com.app.wuyang.myweather.data;
  */
 public class DrawerData {
     private int imageId;
-    private String itemName;
+    private int itemName;
 
-    public DrawerData(int imageId,String itemName) {
+    public DrawerData(int imageId,int itemName) {
         this.imageId = imageId;
         this.itemName =itemName;
     }
@@ -17,7 +17,7 @@ public class DrawerData {
         return imageId;
     }
 
-    public String getItemName(){
+    public int getItemName(){
         return itemName;
     }
 }

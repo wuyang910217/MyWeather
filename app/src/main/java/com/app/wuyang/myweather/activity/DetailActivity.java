@@ -14,6 +14,7 @@ import com.app.wuyang.myweather.data.LocationInfo;
 import com.app.wuyang.myweather.data.WeatherIndex;
 import com.app.wuyang.myweather.data.WeatherInfo;
 import com.app.wuyang.myweather.db.AirQualityHelper;
+import com.app.wuyang.myweather.db.DbQuery;
 import com.app.wuyang.myweather.db.LocationInfoHelper;
 import com.app.wuyang.myweather.db.WeatherHelper;
 import com.app.wuyang.myweather.utility.WeatherTransformUtils;
@@ -37,7 +38,6 @@ public class DetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_detail);
 
-
         initView();
         Intent intent =getIntent();
         switch (intent.getAction()){
@@ -50,8 +50,6 @@ public class DetailActivity extends AppCompatActivity{
             default:
                 break;
         }
-
-
 
     }
     private void initView(){
@@ -81,87 +79,26 @@ public class DetailActivity extends AppCompatActivity{
     }
 
     private void showDetailToday() {
-        AirQualityHelper airQualityHelper =AirQualityHelper.getInstance(this);
-        WeatherHelper weatherHelper=new WeatherHelper(this);
-        LocationInfoHelper locationInfoHelper =new LocationInfoHelper(this);
-        WeatherTransformUtils transformUtils =new WeatherTransformUtils();
-
-
-        List<AirQuality> airQualityList =airQualityHelper.loadAirQuality();
-        List<WeatherInfo> weatherInfoList=weatherHelper.loadWeatherInfo();
-        LocationInfo locationInfo =locationInfoHelper.loadLocationInfo();
-        List<WeatherIndex> weatherIndexList =weatherHelper.loadWeatherIndex();
-
-        if (airQualityList==null){
-            detail_air_quality.setText("无数据");
-            detail_pollutant.setText("无数据");
-            detail_pm25.setText("无数据");
-            detail_pm10.setText("无数据");
-            detail_o3.setText("无数据");
-            detail_so2.setText("无数据");
-            detail_no2.setText("无数据");
-            detail_co.setText("无数据");
-        }else {
-            detail_air_quality.setText(airQualityList.get(0).getQuality());
-            String pollutant =airQualityList.get(0).getPollutant();
-            if (pollutant!=null){
-                detail_pollutant.setText(pollutant);
-            }else {
-                detail_pollutant.setText("无数据");
-            }
-            detail_pm25.setText(""+airQualityList.get(0).getPm25());
-            detail_pm10.setText(""+airQualityList.get(0).getPm10());
-            detail_o3.setText(""+airQualityList.get(0).getO3());
-            detail_so2.setText(""+airQualityList.get(0).getSo2());
-            detail_no2.setText(""+airQualityList.get(0).getNo2());
-            detail_co.setText(""+airQualityList.get(0).getCo());
-        }
-        if (weatherInfoList==null){
-            detail_weather_day.setText("无数据");
-            detail_weather_night.setText("无数据");
-            detail_temp_day.setText("无数据");
-            detail_temp_night.setText("无数据");
-            detail_sun_raise.setText("无数据");
-            detail_publish_time.setText("无数据");
-        }else {
-            String weatherDay =transformUtils.tranWeather(
-                    weatherInfoList.get(0).getWeather_day());
-            if (weatherDay==null){
-                detail_weather_day.setText("无数据");
-            }else {
-                detail_weather_day.setText(weatherDay);
-            }
-
-            detail_weather_night.setText(transformUtils.tranWeather(
-                    weatherInfoList.get(0).getWeather_night()));
-            detail_temp_day.setText(weatherInfoList.get(0).getTemperature_day()+"℃");
-            detail_temp_night.setText(weatherInfoList.get(0).getTemperature_night()+"℃");
-            detail_sun_raise.setText(weatherInfoList.get(0).getSun_time());
-
-            String publish_time =weatherInfoList.get(0).getPublish_time();
-            String publish1=publish_time.substring(8,10);
-            String publish2=publish_time.substring(10);
-            detail_publish_time.setText(publish1+":"+publish2);
-        }
-
-        if (weatherIndexList==null){
-            detail_weather_index1.setText("无数据");
-            detail_weather_index2.setText("无数据");
-            detail_weather_index3.setText("无数据");
-        }else {
-            detail_weather_index1.setText(weatherIndexList.get(0).getWeatherIndexLevel());
-            detail_weather_index2.setText(weatherIndexList.get(1).getWeatherIndexLevel());
-            detail_weather_index3.setText(weatherIndexList.get(2).getWeatherIndexLevel());
-        }
-
-        if (locationInfo==null){
-            detail_city_name.setText("无数据");
-            detail_county_name.setText("无数据");
-        }else {
-            detail_county_name.setText(locationInfo.getCounty());
-            detail_city_name.setText(locationInfo.getCity());
-        }
-
+        DbQuery dbQuery=new DbQuery(this);
+        detail_weather_day.setText(dbQuery.getTodayWeatherContent(DbQuery.WEATHER_DAY));
+        detail_weather_night.setText(dbQuery.getTodayWeatherContent(DbQuery.WEATHER_NIGHT));
+        detail_temp_day.setText(dbQuery.getTodayWeatherContent(DbQuery.TEMPERATURE_DAY));
+        detail_temp_night.setText(dbQuery.getTodayWeatherContent(DbQuery.TEMPERATURE_NIGHT));
+        detail_weather_index1.setText(dbQuery.getWeatherIndexExerciseContent(DbQuery.WEATHER_INDEX_LEVEL));
+        detail_weather_index2.setText(dbQuery.getWeatherIndexComfortContent(DbQuery.WEATHER_INDEX_LEVEL));
+        detail_weather_index3.setText(dbQuery.getWeatherIndexClothContent(DbQuery.WEATHER_INDEX_LEVEL));
+        detail_sun_raise.setText(dbQuery.getTodayWeatherContent(DbQuery.SUN_TIME));
+        detail_publish_time.setText(dbQuery.getTodayWeatherContent(DbQuery.PUBLISH_TIME));
+        detail_air_quality.setText(dbQuery.getAirQualityContent(DbQuery.QUALITY));
+        detail_pollutant.setText(dbQuery.getAirQualityContent(DbQuery.POLLUTANT));
+        detail_pm25.setText(dbQuery.getAirQualityContent(DbQuery.PM25));
+        detail_pm10.setText(dbQuery.getAirQualityContent(DbQuery.PM10));
+        detail_o3.setText(dbQuery.getAirQualityContent(DbQuery.O3));
+        detail_so2.setText(dbQuery.getAirQualityContent(DbQuery.SO2));
+        detail_no2.setText(dbQuery.getAirQualityContent(DbQuery.NO2));
+        detail_co.setText(dbQuery.getAirQualityContent(DbQuery.CO));
+        detail_county_name.setText(dbQuery.getLocationContent(DbQuery.COUNTY));
+        detail_city_name.setText(dbQuery.getLocationContent(DbQuery.CITY));
     }
 
     @Override
