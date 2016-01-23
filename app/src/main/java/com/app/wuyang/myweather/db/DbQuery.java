@@ -2,6 +2,7 @@ package com.app.wuyang.myweather.db;
 
 import android.content.Context;
 
+import com.app.wuyang.myweather.R;
 import com.app.wuyang.myweather.data.AirQuality;
 import com.app.wuyang.myweather.data.LocationInfo;
 import com.app.wuyang.myweather.data.WeatherIndex;
@@ -69,6 +70,14 @@ public class DbQuery {
     public static final String WEATHER_INDEX_LEVEL="weatherIndexLevel";
     public static final String WEATHER_INDEX_INFO="weatherIndexInfo";
 
+    public static final String POLLUTION_LEVEL1="优";
+    public static final String POLLUTION_LEVEL2="良";
+    public static final String POLLUTION_LEVEL3="轻度污染";
+    public static final String POLLUTION_LEVEL4="中度污染";
+    public static final String POLLUTION_LEVEL5="重度污染";
+    public static final String POLLUTION_LEVEL6="严重污染";
+
+
     public DbQuery(Context context) {
         this.aboutUtils=new WeatherAboutUtils();
         this.airQualityHelper =AirQualityHelper.getInstance(context);
@@ -98,6 +107,51 @@ public class DbQuery {
         return !(weatherIndexList == null || weatherIndexList.size() == 0);
     }
 
+    public String getAirQualityLevel(String content){
+        if (isAirQualityExist()){
+            switch (content){
+                case POLLUTION_LEVEL1:
+                    return "空气质量"+content;
+                case POLLUTION_LEVEL2:
+                    return "空气质量"+content;
+                case POLLUTION_LEVEL3:
+                    return content;
+                case POLLUTION_LEVEL4:
+                    return content;
+                case POLLUTION_LEVEL5:
+                    return content;
+                case POLLUTION_LEVEL6:
+                    return content;
+                default:
+                    return "无数据";
+            }
+        }
+        return "无数据";
+    }
+
+
+    public int getAirQualityLevelId(String content){
+        if (isAirQualityExist()){
+            switch (content){
+                case POLLUTION_LEVEL1:
+                    return R.drawable.air_quality_pollutant_level1;
+                case POLLUTION_LEVEL2:
+                    return R.drawable.air_quality_pollutant_level1;
+                case POLLUTION_LEVEL3:
+                    return R.drawable.air_quality_pollutant_level2;
+                case POLLUTION_LEVEL4:
+                    return R.drawable.air_quality_pollutant_level3;
+                case POLLUTION_LEVEL5:
+                    return R.drawable.air_quality_pollutant_level3;
+                case POLLUTION_LEVEL6:
+                    return R.drawable.air_quality_pollutant_level4;
+                default:
+                    return R.color.app_main_color;
+            }
+        }
+        return R.color.app_main_color;
+    }
+
     public String getAirQualityContent(String content){
         if (isAirQualityExist()){
             switch (content){
@@ -119,6 +173,8 @@ public class DbQuery {
                     return ""+airQualityList.get(0).getQuality();
                 case TIME:
                     return ""+airQualityList.get(0).getTime();
+                default:
+                    return "无数据";
             }
         }
         return "无数据";
@@ -149,10 +205,20 @@ public class DbQuery {
                     return locationInfo.getAddress();
                 case PROVINCE:
                     return locationInfo.getProvince();
+                default:
+                    return "无数据";
             }
         }
         return "无数据";
 
+    }
+
+    public int getWeatherImage(){
+        String weather=weatherInfoList.get(0).getWeather_day();
+        if (isWeatherInfoExist()){
+            return transformUtils.tranWeatherIcon(weather);
+        }
+        return R.drawable.weather_undefined;
     }
 
     public String getTodayWeatherContent(String content){
@@ -189,6 +255,8 @@ public class DbQuery {
                             weatherInfoList.get(0).getWind_direction_night());
                 case SUN_TIME:
                     return weatherInfoList.get(0).getSun_time();
+                default:
+                    return "无数据";
             }
         }
         return "无数据";
@@ -228,6 +296,8 @@ public class DbQuery {
                             weatherInfoList.get(1).getWind_direction_night());
                 case SUN_TIME:
                     return weatherInfoList.get(1).getSun_time();
+                default:
+                    return "无数据";
             }
         }
         return "无数据";
@@ -266,6 +336,8 @@ public class DbQuery {
                             weatherInfoList.get(2).getWind_direction_night());
                 case SUN_TIME:
                     return weatherInfoList.get(2).getSun_time();
+                default:
+                    return "无数据";
             }
         }
         return "无数据";
@@ -280,6 +352,8 @@ public class DbQuery {
                     return weatherIndexList.get(0).getWeatherIndexLevel();
                 case WEATHER_INDEX_INFO:
                     return weatherIndexList.get(0).getWeatherIndexInfo();
+                default:
+                    return "无数据";
             }
         }
         return "无数据";
@@ -293,6 +367,8 @@ public class DbQuery {
                     return weatherIndexList.get(2).getWeatherIndexLevel();
                 case WEATHER_INDEX_INFO:
                     return weatherIndexList.get(2).getWeatherIndexInfo();
+                default:
+                    return "无数据";
             }
         }
         return "无数据";
@@ -306,6 +382,8 @@ public class DbQuery {
                     return weatherIndexList.get(1).getWeatherIndexLevel();
                 case WEATHER_INDEX_INFO:
                     return weatherIndexList.get(1).getWeatherIndexInfo();
+                default:
+                    return "无数据";
             }
         }
         return "无数据";
