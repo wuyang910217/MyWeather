@@ -8,6 +8,8 @@ import com.app.wuyang.myweather.R;
  */
 public class WeatherTransformUtils {
 
+    private WeatherAboutUtils weatherAboutUtils =new WeatherAboutUtils();
+
     private static final String sunnyDescribe ="00";
     private static final String cloudyDescribe="01";
     private static final String overcastDescribe="02";
@@ -154,12 +156,21 @@ public class WeatherTransformUtils {
     public int tranWeatherIcon(String weather){
         switch (weather){
             case sunnyDescribe:
+                if (weatherAboutUtils.isNight()){
+                    return R.drawable.weather_00_night;
+                }
                 return R.drawable.weather_00;
             case cloudyDescribe:
+                if (weatherAboutUtils.isNight()){
+                    return R.drawable.weather_01_night;
+                }
                 return R.drawable.weather_01;
             case overcastDescribe:
                 return R.drawable.weather_02;
             case showerDescribe:
+                if (weatherAboutUtils.isNight()){
+                    return R.drawable.weather_03_night;
+                }
                 return R.drawable.weather_03;
             case thunderShowerDescribe:
                 return R.drawable.weather_04;
@@ -180,6 +191,9 @@ public class WeatherTransformUtils {
             case severeStormDescribe:
                 return R.drawable.weather_12;
             case snowFlurryDescribe:
+                if (weatherAboutUtils.isNight()){
+                    return R.drawable.weather_13_night;
+                }
                 return R.drawable.weather_13;
             case lightSnowDescribe:
                 return R.drawable.weather_14;

@@ -3,6 +3,7 @@ package com.app.wuyang.myweather.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -23,12 +24,16 @@ import android.widget.Toast;
 import com.app.wuyang.myweather.CircleImageView;
 import com.app.wuyang.myweather.R;
 import com.app.wuyang.myweather.adapter.DrawerAdapter;
+import com.app.wuyang.myweather.adapter.WeatherAdapter;
 import com.app.wuyang.myweather.asynctask.HandleAirQualityAndWeatherTask;
 import com.app.wuyang.myweather.data.DrawerData;
+import com.app.wuyang.myweather.data.WeatherData;
 import com.app.wuyang.myweather.db.DbQuery;
 import com.app.wuyang.myweather.utility.LogUtility;
 import com.app.wuyang.myweather.utility.SetImageUtility;
+import com.app.wuyang.myweather.utility.WeatherAboutUtils;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +43,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private ActionBarDrawerToggle mDrawerToggle;
 
     private List<DrawerData> mData= new ArrayList<>();
+    private List<WeatherData> weatherDatas =new ArrayList<>();
     private ListView mDrawerList;
-
+    private ListView weatherList;
+    private WeatherAdapter weatherAdapter;
     private TextView showTodayDate,showCityName,showQuality,showPm25,
             showPm10,showWeather,showTempMax,showTempMin,showWind,showWeatherIndex,showDetail;
     private ImageView showImage;
@@ -66,6 +73,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         initData();
         initView();
 
+
+
+
         mDrawerList = (ListView) findViewById(R.id.item_list);
         mDrawerList.setAdapter(new DrawerAdapter(
                 MainActivity.this,
@@ -74,6 +84,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         mDrawerList.setOnItemClickListener(this);
 
+        weatherList = (ListView) findViewById(R.id.item_list_main);
+        weatherList.setOnItemClickListener(this);
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, R.string.open, R.string.close) {
@@ -93,9 +105,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+        Bitmap bitmap = imageUtility.setImage();
+        if (bitmap!=null){
+            circleImageView.setImageBitmap(bitmap);
+        }
+
+
         HandleAirQualityAndWeatherTask task =new
                 HandleAirQualityAndWeatherTask(MainActivity.this);
         task.execute();
+
     }
 
     @Override
@@ -103,6 +122,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onPostResume();
         showUiTask showUiTask =new showUiTask();
         showUiTask.execute();
+
     }
 
     @Override
@@ -126,6 +146,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Toast.makeText(this,"别点我...",Toast.LENGTH_SHORT).show();
                 break;
         }
+        WeatherData weatherData=weatherDatas.get(position);
+        Intent intent =new Intent(this,DetailActivity.class);
+        intent.putExtra("ab",weatherData);
+        startActivity(intent);
     }
 
     public class showUiTask extends AsyncTask<Void,Void,Void>{
@@ -145,7 +169,33 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
             showUi();
+            weatherAdapter = new WeatherAdapter(MainActivity.this,
+                    R.layout.layout_cardview_item, addToList());
+            weatherList.setAdapter(weatherAdapter);
         }
+    }
+
+    private List<WeatherData> addToList(){
+        DbQuery dbQuery=new DbQuery(this);
+
+        WeatherData weatherData=new WeatherData(dbQuery.getTomorrowWeatherImage(),
+                dbQuery.getTomorrowWeatherContent(DbQuery.WEATHER_DAY),
+                dbQuery.getTomorrowWeatherContent(DbQuery.TOMORROW),
+                "白天气温："+dbQuery.getTomorrowWeatherContent(DbQuery.TEMPERATURE_DAY),
+                "夜晚气温："+dbQuery.getTomorrowWeatherContent(DbQuery.TEMPERATURE_NIGHT),
+                dbQuery.getTomorrowWeatherContent(DbQuery.WIND_POWER_DAY),
+                dbQuery.getTomorrowWeatherContent(DbQuery.WIND_DIRECTION_DAY));
+        weatherDatas.add(weatherData);
+
+        WeatherData weatherData1=new WeatherData(dbQuery.getTodayAfterTomorrowWeatherImage(),
+                dbQuery.getTodayAfterTomorrowWeatherContent(DbQuery.WEATHER_DAY),
+                dbQuery.getTodayAfterTomorrowWeatherContent(DbQuery.TODAY_AFTER_TOMORROW),
+                "白天气温："+dbQuery.getTodayAfterTomorrowWeatherContent(DbQuery.TEMPERATURE_DAY),
+                "夜晚气温："+dbQuery.getTodayAfterTomorrowWeatherContent(DbQuery.TEMPERATURE_NIGHT),
+                dbQuery.getTodayAfterTomorrowWeatherContent(DbQuery.WIND_POWER_DAY),
+                dbQuery.getTodayAfterTomorrowWeatherContent(DbQuery.WIND_DIRECTION_DAY));
+        weatherDatas.add(weatherData1);
+        return weatherDatas;
     }
     private void initView(){
         showTodayDate= (TextView) findViewById(R.id.showTodayDate);
@@ -168,13 +218,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         DbQuery dbQuery=new DbQuery(this);
         showTodayDate.setText(dbQuery.getTodayWeatherContent(DbQuery.TODAY));
         showCityName.setText(dbQuery.getLocationContent(DbQuery.COUNTY));
-        showPm25.setText(dbQuery.getAirQualityContent(DbQuery.PM25));
-        showPm10.setText(dbQuery.getAirQualityContent(DbQuery.PM10));
+        showPm25.setText("PM2.5："+dbQuery.getAirQualityContent(DbQuery.PM25));
+        showPm10.setText("PM10："+dbQuery.getAirQualityContent(DbQuery.PM10));
         showWeather.setText(dbQuery.getTodayWeatherContent(DbQuery.WEATHER_DAY));
+        WeatherAboutUtils aboutUtils=new WeatherAboutUtils();
+        if (aboutUtils.isNight()){
+            showTempMax.setVisibility(View.GONE);
+        }
         showTempMax.setText("白天气温："+dbQuery.getTodayWeatherContent(DbQuery.TEMPERATURE_DAY));
         showTempMin.setText("夜晚气温："+dbQuery.getTodayWeatherContent(DbQuery.TEMPERATURE_NIGHT));
-        showWind.setText(dbQuery.getTodayWeatherContent(DbQuery.WIND_DIRECTION_DAY
-                + "  " + dbQuery.getTodayWeatherContent(DbQuery.WIND_POWER_DAY)));
+        showWind.setText(dbQuery.getTodayWeatherContent(DbQuery.WIND_DIRECTION_DAY)
+                + "  " + dbQuery.getTodayWeatherContent(DbQuery.WIND_POWER_DAY));
         showImage.setImageResource(dbQuery.getWeatherImage());
         showDetail.setText(R.string.show_detail);
         showWeatherIndex.setText(dbQuery.getWeatherIndexClothContent(DbQuery.WEATHER_INDEX_INFO));
@@ -195,11 +249,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
-                        startActivityForResult(imageUtility.chooseFromAlbum(),
+                        Intent intent=imageUtility.chooseFromAlbum();
+                        startActivityForResult(intent,
                                 SetImageUtility.CHOOSE_PHOTO);
+                        break;
                     case 1:
-                        startActivityForResult(imageUtility.takePhoto(),
+                        Intent intent1 =imageUtility.takePhoto();
+                        startActivityForResult(intent1,
                                 SetImageUtility.TAKE_PHOTO);
+                        break;
                 }
             }
         });
@@ -212,9 +270,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch (requestCode) {
             case SetImageUtility.TAKE_PHOTO:
                 if (resultCode == RESULT_OK){
-                    startActivityForResult(imageUtility.scalePhoto(),
+                    Intent intent =imageUtility.scalePhoto();
+                    startActivityForResult(intent,
                             SetImageUtility.CROP_PHOTO);
                 }
+                break;
             case SetImageUtility.CROP_PHOTO :
                 if (resultCode == RESULT_OK ) {
                     Bitmap bitmap=imageUtility.setImage();
@@ -222,11 +282,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                         circleImageView.setImageBitmap(bitmap);
                     }
                 }
+                break;
             case SetImageUtility.CHOOSE_PHOTO:
                 if (resultCode == RESULT_OK && data != null) {
-                    startActivityForResult(imageUtility.cropPhoto(data),
+                    Intent intent =imageUtility.cropPhoto(data);
+                    startActivityForResult(intent,
                             SetImageUtility.CROP_PHOTO);
                 }
+                break;
             default:
                 break;
         }

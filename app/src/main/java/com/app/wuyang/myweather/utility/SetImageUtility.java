@@ -37,7 +37,7 @@ public class SetImageUtility {
         return null;
     }
 
-    private Uri imageUri(){
+    public Uri imageUri(){
         String outputImageDir = Environment.
                 getExternalStorageDirectory()+ File.separator+"Android"+File.separator
                 +"data"+File.separator+mContext.getPackageName();

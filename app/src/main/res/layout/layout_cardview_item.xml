@@ -3,11 +3,11 @@
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="match_parent"
     android:clickable="true"
-    cardview:cardCornerRadius="2dp"
-    cardview:cardBackgroundColor="@color/cardview_press"
-    cardview:cardElevation="10dp"
+    cardview:cardCornerRadius="10dp"
+    cardview:cardBackgroundColor="@color/app_main_color"
+    cardview:cardElevation="6dp"
     android:id="@+id/card_view_forecast">
 
     <LinearLayout
@@ -23,19 +23,17 @@
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/weatherImgId"
-                android:src="@drawable/ic_wb_sunny_white_48dp"
                 android:contentDescription="@string/item_icon"
-                android:layout_width="80dp"
-                android:layout_marginTop="2dp"
+                android:layout_width="70dp"
+                android:layout_marginTop="15dp"
                 android:layout_gravity="center"
-                android:layout_height="80dp"/>
+                android:layout_height="70dp"/>
             <TextView
                 android:id="@+id/weatherDay"
-                android:text="@string/app_name"
                 android:gravity="center"
                 android:textSize="15sp"
                 android:textColor="@color/white_color"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
@@ -49,27 +47,26 @@
                 android:id="@+id/dateShow"
                 android:textColor="@color/white_color"
                 android:gravity="center"
-                android:layout_margin="10dp"
-                android:text="@string/app_name"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <LinearLayout
                 android:orientation="horizontal"
-                android:layout_margin="10dp"
+                android:layout_marginTop="6dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
                     android:id="@+id/windDirect"
                     android:textColor="@color/white_color"
-                    android:text="@string/app_name"
                     android:gravity="center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
                 <TextView
                     android:id="@+id/windPower"
-                    android:text="@string/app_name"
                     android:gravity="center"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:textColor="@color/white_color"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
@@ -78,15 +75,13 @@
 
             <TextView
                 android:id="@+id/tempDay"
-                android:layout_margin="10dp"
-                android:text="@string/app_name"
+                android:layout_marginTop="6dp"
                 android:textColor="@color/white_color"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/tempNight"
-                android:layout_margin="10dp"
-                android:text="@string/app_name"
+                android:layout_marginTop="6dp"
                 android:textColor="@color/white_color"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>

@@ -1,9 +1,16 @@
 package com.app.wuyang.myweather.data;
 
+import com.app.wuyang.myweather.activity.MainActivity;
+import com.app.wuyang.myweather.db.DbQuery;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by wuyang on 16-1-22.
  */
-public class WeatherData {
+public class WeatherData implements Serializable{
     private int weatherImgId;
     private String weatherDay;
     private String dateShow;
@@ -55,4 +62,7 @@ public class WeatherData {
     public String getWindDirect() {
         return windDirect;
     }
+
+
+
 }

@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -22,6 +23,12 @@ public class WeatherAboutUtils {
     private String getDate(){
         SimpleDateFormat dateFormat =new SimpleDateFormat("yyyyMMddHHmm", Locale.CHINA);
         return dateFormat.format(new Date());
+    }
+
+    public boolean isNight(){
+        Calendar calendar =Calendar.getInstance(Locale.CHINA);
+        int hour =calendar.get(Calendar.HOUR_OF_DAY);
+        return !(hour > 7 && hour < 18);
     }
 
     public String getFriendDate(){

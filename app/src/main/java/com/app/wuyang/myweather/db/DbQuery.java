@@ -214,8 +214,34 @@ public class DbQuery {
     }
 
     public int getWeatherImage(){
-        String weather=weatherInfoList.get(0).getWeather_day();
         if (isWeatherInfoExist()){
+            if (aboutUtils.isNight()){
+                String weather=weatherInfoList.get(0).getWeather_night();
+                return transformUtils.tranWeatherIcon(weather);
+            }
+            String weather=weatherInfoList.get(0).getWeather_day();
+            return transformUtils.tranWeatherIcon(weather);
+        }
+        return R.drawable.weather_undefined;
+    }
+    public int getTomorrowWeatherImage(){
+        if (isWeatherInfoExist()){
+            if (aboutUtils.isNight()){
+                String weather=weatherInfoList.get(1).getWeather_night();
+                return transformUtils.tranWeatherIcon(weather);
+            }
+            String weather=weatherInfoList.get(1).getWeather_day();
+            return transformUtils.tranWeatherIcon(weather);
+        }
+        return R.drawable.weather_undefined;
+    }
+    public int getTodayAfterTomorrowWeatherImage(){
+        if (isWeatherInfoExist()){
+            if (aboutUtils.isNight()){
+                String weather=weatherInfoList.get(2).getWeather_night();
+                return transformUtils.tranWeatherIcon(weather);
+            }
+            String weather=weatherInfoList.get(2).getWeather_day();
             return transformUtils.tranWeatherIcon(weather);
         }
         return R.drawable.weather_undefined;
@@ -227,6 +253,10 @@ public class DbQuery {
                 case TODAY:
                     return aboutUtils.getFriendDate();
                 case WEATHER_DAY:
+                    if (aboutUtils.isNight()){
+                        return transformUtils.tranWeather(
+                                weatherInfoList.get(0).getWeather_night());
+                    }
                     return transformUtils.tranWeather(
                             weatherInfoList.get(0).getWeather_day());
                 case WEATHER_NIGHT:
@@ -242,12 +272,20 @@ public class DbQuery {
                     String publish2=publish_time.substring(10);
                     return publish1+":"+publish2;
                 case WIND_POWER_DAY:
+                    if (aboutUtils.isNight()){
+                        return transformUtils.tranWindPower(
+                                weatherInfoList.get(0).getWind_power_night());
+                    }
                     return transformUtils.tranWindPower(
                             weatherInfoList.get(0).getWind_power_day());
                 case WIND_POWER_NIGHT:
                     return transformUtils.tranWindPower(
                             weatherInfoList.get(0).getWind_power_night());
                 case WIND_DIRECTION_DAY:
+                    if (aboutUtils.isNight()){
+                        return transformUtils.tranWeather(
+                                weatherInfoList.get(0).getWind_direction_night());
+                    }
                     return transformUtils.tranWeather(
                             weatherInfoList.get(0).getWind_direction_day());
                 case WIND_DIRECTION_NIGHT:
@@ -262,12 +300,16 @@ public class DbQuery {
         return "无数据";
     }
 
-    public String getTomrrowWeatherContent(String content){
+    public String getTomorrowWeatherContent(String content){
         if (isWeatherInfoExist()) {
             switch (content) {
                 case TOMORROW:
                     return aboutUtils.getFriendDateTomorrow();
                 case WEATHER_DAY:
+                    if (aboutUtils.isNight()){
+                        return transformUtils.tranWeather(
+                                weatherInfoList.get(1).getWeather_night());
+                    }
                     return transformUtils.tranWeather(
                             weatherInfoList.get(1).getWeather_day());
                 case WEATHER_NIGHT:
@@ -283,12 +325,20 @@ public class DbQuery {
                     String publish2=publish_time.substring(10);
                     return publish1+":"+publish2;
                 case WIND_POWER_DAY:
+                    if (aboutUtils.isNight()){
+                        return transformUtils.tranWindPower(
+                                weatherInfoList.get(1).getWind_power_night());
+                    }
                     return transformUtils.tranWindPower(
                             weatherInfoList.get(1).getWind_power_day());
                 case WIND_POWER_NIGHT:
                     return transformUtils.tranWindPower(
                             weatherInfoList.get(1).getWind_power_night());
                 case WIND_DIRECTION_DAY:
+                    if (aboutUtils.isNight()){
+                        return transformUtils.tranWeather(
+                                weatherInfoList.get(1).getWind_direction_night());
+                    }
                     return transformUtils.tranWeather(
                             weatherInfoList.get(1).getWind_direction_day());
                 case WIND_DIRECTION_NIGHT:
@@ -302,12 +352,16 @@ public class DbQuery {
         }
         return "无数据";
     }
-    public String getTodayAfterTomrrowWeatherContent(String content){
+    public String getTodayAfterTomorrowWeatherContent(String content){
         if (isWeatherInfoExist()){
             switch (content) {
                 case TODAY_AFTER_TOMORROW:
                     return aboutUtils.getFriendDateTodayAfterTomorrow();
                 case WEATHER_DAY:
+                    if (aboutUtils.isNight()){
+                        return transformUtils.tranWeather(
+                                weatherInfoList.get(2).getWeather_night());
+                    }
                     return transformUtils.tranWeather(
                             weatherInfoList.get(2).getWeather_day());
                 case WEATHER_NIGHT:
@@ -323,12 +377,20 @@ public class DbQuery {
                     String publish2=publish_time.substring(10);
                     return publish1+":"+publish2;
                 case WIND_POWER_DAY:
+                    if (aboutUtils.isNight()){
+                        return transformUtils.tranWindPower(
+                                weatherInfoList.get(2).getWind_power_night());
+                    }
                     return transformUtils.tranWindPower(
                             weatherInfoList.get(2).getWind_power_day());
                 case WIND_POWER_NIGHT:
                     return transformUtils.tranWindPower(
                             weatherInfoList.get(2).getWind_power_night());
                 case WIND_DIRECTION_DAY:
+                    if (aboutUtils.isNight()){
+                        return transformUtils.tranWeather(
+                                weatherInfoList.get(2).getWind_direction_day());
+                    }
                     return transformUtils.tranWeather(
                             weatherInfoList.get(2).getWind_direction_day());
                 case WIND_DIRECTION_NIGHT:

@@ -11,6 +11,10 @@ import android.widget.TextView;
 
 import com.app.wuyang.myweather.R;
 import com.app.wuyang.myweather.data.WeatherData;
+import com.app.wuyang.myweather.db.DbQuery;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by wuyang on 16-1-3.
@@ -19,10 +23,11 @@ public class WeatherAdapter extends ArrayAdapter<WeatherData> {
 
     private int resourceId;
 
-    public WeatherAdapter(Context context, int resource, WeatherData[] objects) {
+    public WeatherAdapter(Context context, int resource, List<WeatherData> objects) {
         super(context, resource, objects);
         this.resourceId=resource;
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -62,4 +67,5 @@ public class WeatherAdapter extends ArrayAdapter<WeatherData> {
         private TextView windPower;
         private TextView windDirect;
     }
+
 }
