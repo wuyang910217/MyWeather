@@ -67,9 +67,6 @@ public class HandleAirQualityAndWeatherTask extends AsyncTask<Void,Void,Void>{
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-
-
-
     }
 
     @Override
@@ -78,6 +75,7 @@ public class HandleAirQualityAndWeatherTask extends AsyncTask<Void,Void,Void>{
 //        String[] strings=new String[1];
 //        strings[0]="北京";
 //        --------------------------------------
+        long startTime=System.currentTimeMillis();
 
         LocationInfo locationInfo =locationInfoHelper.loadLocationInfo();
         if (locationInfo==null){
@@ -102,6 +100,10 @@ public class HandleAirQualityAndWeatherTask extends AsyncTask<Void,Void,Void>{
         saveWeatherIndexToDb(weatherIndexUrl);
 
         testInfo();
+
+        long endTime = System.currentTimeMillis();
+        LogUtility.d("abc", "在HandleAirQualityAndWeatherTask------------------ 执行共耗时："
+                + (endTime - startTime) + "ms");
 
         return null;
     }

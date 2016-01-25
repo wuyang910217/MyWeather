@@ -3,7 +3,6 @@ package com.app.wuyang.myweather.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -29,11 +28,12 @@ import com.app.wuyang.myweather.asynctask.HandleAirQualityAndWeatherTask;
 import com.app.wuyang.myweather.data.DrawerData;
 import com.app.wuyang.myweather.data.WeatherData;
 import com.app.wuyang.myweather.db.DbQuery;
+import com.app.wuyang.myweather.fragment.DetailWeatherFragment;
+import com.app.wuyang.myweather.service.NotificationService;
 import com.app.wuyang.myweather.utility.LogUtility;
 import com.app.wuyang.myweather.utility.SetImageUtility;
 import com.app.wuyang.myweather.utility.WeatherAboutUtils;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,7 +85,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mDrawerList.setOnItemClickListener(this);
 
         weatherList = (ListView) findViewById(R.id.item_list_main);
-        weatherList.setOnItemClickListener(this);
+        weatherList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent =new Intent(MainActivity.this,DetailWeatherFragment.class);
+                intent.putExtra("position",position);
+                Toast.makeText(MainActivity.this,"dddd"+position,Toast.LENGTH_SHORT).show();
+                startActivity(intent);
+            }
+        });
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, R.string.open, R.string.close) {
@@ -105,23 +113,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mDrawerToggle.syncState();
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        Bitmap bitmap = imageUtility.setImage();
+        imageUtility=new SetImageUtility(MainActivity.this);
+        Bitmap bitmap=imageUtility.setImage();
         if (bitmap!=null){
             circleImageView.setImageBitmap(bitmap);
         }
+
 
 
         HandleAirQualityAndWeatherTask task =new
                 HandleAirQualityAndWeatherTask(MainActivity.this);
         task.execute();
 
+
+        showUiTask showUiTask =new showUiTask();
+        showUiTask.execute();
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-        showUiTask showUiTask =new showUiTask();
-        showUiTask.execute();
 
     }
 
@@ -129,27 +140,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent,
                             View view, int position, long id) {
         DrawerData drawerData =mData.get(position);
-        switch (drawerData.getItemName()){
-            case R.string.item_weather:
-                Toast.makeText(this,"别点我...",Toast.LENGTH_SHORT).show();
-                break;
-            case R.string.item_address:
-                Toast.makeText(this,"别点我...",Toast.LENGTH_SHORT).show();
-                break;
-            case R.string.item_good:
-                Toast.makeText(this,"别点我...",Toast.LENGTH_SHORT).show();
-                break;
-            case R.string.item_share:
-                Toast.makeText(this,"别点我...",Toast.LENGTH_SHORT).show();
-                break;
-            case R.string.item_setting:
-                Toast.makeText(this,"别点我...",Toast.LENGTH_SHORT).show();
-                break;
-        }
-        WeatherData weatherData=weatherDatas.get(position);
-        Intent intent =new Intent(this,DetailActivity.class);
-        intent.putExtra("ab",weatherData);
-        startActivity(intent);
+        Toast.makeText(this,"别点我..."+drawerData.getItemName(),Toast.LENGTH_SHORT).show();
+
+//        WeatherData weatherData=weatherDatas.get(position);
+//        Intent intent =new Intent(this,DetailActivity.class);
+//        intent.putExtra("ab",weatherData);
+//        startActivity(intent);
     }
 
     public class showUiTask extends AsyncTask<Void,Void,Void>{
@@ -172,6 +168,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             weatherAdapter = new WeatherAdapter(MainActivity.this,
                     R.layout.layout_cardview_item, addToList());
             weatherList.setAdapter(weatherAdapter);
+
+            Intent intent =new Intent(getApplicationContext(), NotificationService.class);
+            startService(intent);
+
+//            Intent intent = new Intent("WEATHER_NOTIFICATION");
+//            intent.putExtra("enable", true);
+//            sendBroadcast(intent);
         }
     }
 
@@ -238,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void showCircleImage(View view){
-        imageUtility=new SetImageUtility(MainActivity.this);
 
         final String[] items ={"从相册选择","照相"};
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);

@@ -32,6 +32,7 @@ public class DetailActivity extends AppCompatActivity{
             detail_publish_time,detail_air_quality,detail_pollutant,detail_pm25,detail_pm10,
             detail_o3,detail_so2,detail_no2,detail_co,detail_county_name,detail_city_name;
 
+    private static final String WEATHER_NOTIFICATION="WEATHER_NOTIFICATION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +40,19 @@ public class DetailActivity extends AppCompatActivity{
         setContentView(R.layout.layout_detail);
 
         initView();
-        Intent intent =getIntent();
-        switch (intent.getAction()){
-            case MainActivity.DETAIL_ACTION_TODAY:
-                showDetailToday();
-                break;
-            case MainActivity.DETAIL_ACTION_OTHER:
-                showDetailOther();
-                break;
-            default:
-                break;
-        }
+//        Intent intent =getIntent();
+//        switch (intent.getAction()){
+//            case MainActivity.DETAIL_ACTION_TODAY:
+//                showDetailToday();
+//                break;
+//            case MainActivity.DETAIL_ACTION_OTHER:
+//                showDetailOther();
+//                break;
+//            case WEATHER_NOTIFICATION:
+//                showDetailToday();
+//            default:
+//                break;
+        showDetailToday();
 
     }
     private void initView(){

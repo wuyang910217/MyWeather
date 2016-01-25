@@ -16,8 +16,9 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <application
+        android:fullBackupContent="true"
         android:allowBackup="true"
-        android:icon="@mipmap/ic"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -44,6 +45,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <receiver android:exported="false" android:name=".receiver.WeatherReceiver">
+            <intent-filter >
+                <action android:name="WEATHER_NOTIFICATION"/>
+                <action android:name="AirQuality_NOTIFICATION"/>
+            </intent-filter>
+        </receiver>
+        <service android:name=".service.NotificationService"/>
     </application>
 
 </manifest>

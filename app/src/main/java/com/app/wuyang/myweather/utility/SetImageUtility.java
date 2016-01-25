@@ -31,7 +31,7 @@ public class SetImageUtility {
             bitmap = BitmapFactory.decodeStream(
                     mContext.getContentResolver().openInputStream(imageUri()));
             return bitmap;
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;

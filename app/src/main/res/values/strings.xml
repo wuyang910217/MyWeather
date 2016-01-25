@@ -35,6 +35,10 @@
     <string name="detail_weather_night">夜晚天气状况</string>
     <string name="detail_temp_day">白天气温</string>
     <string name="detail_temp_night">晚上气温</string>
+    <string name="detail_wind_power_day">白天风力</string>
+    <string name="detail_wind_power_night">晚上风力</string>
+    <string name="detail_wind_direction_day">白天风向</string>
+    <string name="detail_wind_direction_night">晚上风向</string>
     <string name="detail_weather_index1">晨练指数</string>
     <string name="detail_weather_index2">舒适度指数</string>
     <string name="detail_weather_index3">穿衣指数</string>
