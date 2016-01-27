@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.CardView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,8 +29,7 @@ import com.app.wuyang.myweather.asynctask.HandleAirQualityAndWeatherTask;
 import com.app.wuyang.myweather.data.DrawerData;
 import com.app.wuyang.myweather.data.WeatherData;
 import com.app.wuyang.myweather.db.DbQuery;
-import com.app.wuyang.myweather.fragment.DetailWeatherFragment;
-import com.app.wuyang.myweather.service.NotificationService;
+import com.app.wuyang.myweather.service.TimerService;
 import com.app.wuyang.myweather.utility.LogUtility;
 import com.app.wuyang.myweather.utility.SetImageUtility;
 import com.app.wuyang.myweather.utility.WeatherAboutUtils;
@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private TextView showTodayDate,showCityName,showQuality,showPm25,
             showPm10,showWeather,showTempMax,showTempMin,showWind,showWeatherIndex,showDetail;
     private ImageView showImage;
+    private CardView cardView;
     private CircleImageView circleImageView;
     private SetImageUtility imageUtility;
     public static final String DETAIL_ACTION_TODAY="DETAIL_ACTION_TODAY";
@@ -85,15 +86,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mDrawerList.setOnItemClickListener(this);
 
         weatherList = (ListView) findViewById(R.id.item_list_main);
-        weatherList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent =new Intent(MainActivity.this,DetailWeatherFragment.class);
-                intent.putExtra("position",position);
-                Toast.makeText(MainActivity.this,"dddd"+position,Toast.LENGTH_SHORT).show();
-                startActivity(intent);
-            }
-        });
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, R.string.open, R.string.close) {
@@ -139,13 +131,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemClick(AdapterView<?> parent,
                             View view, int position, long id) {
-        DrawerData drawerData =mData.get(position);
-        Toast.makeText(this,"别点我..."+drawerData.getItemName(),Toast.LENGTH_SHORT).show();
+        Intent intent =new Intent(this,DrawerFragmentActivity.class);
+        intent.putExtra("position",position);
+        startActivity(intent);
 
-//        WeatherData weatherData=weatherDatas.get(position);
-//        Intent intent =new Intent(this,DetailActivity.class);
-//        intent.putExtra("ab",weatherData);
-//        startActivity(intent);
     }
 
     public class showUiTask extends AsyncTask<Void,Void,Void>{
@@ -169,12 +158,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                     R.layout.layout_cardview_item, addToList());
             weatherList.setAdapter(weatherAdapter);
 
-            Intent intent =new Intent(getApplicationContext(), NotificationService.class);
+
+            Intent intent =new Intent(getApplicationContext(), TimerService.class);
+            intent.putExtra("enable",true);
             startService(intent);
 
-//            Intent intent = new Intent("WEATHER_NOTIFICATION");
-//            intent.putExtra("enable", true);
-//            sendBroadcast(intent);
+
         }
     }
 
@@ -299,9 +288,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private void initData() {
         DrawerData a= new DrawerData(R.drawable.ic_wb_sunny_red_24dp,R.string.item_weather);
         mData.add(a);
-        DrawerData b= new DrawerData(R.drawable.ic_place_black_36dp,R.string.item_address);
+        DrawerData b = new DrawerData(R.drawable.ic_mood_black_36dp,R.string.item_query);
         mData.add(b);
-        DrawerData c = new DrawerData(R.drawable.ic_mood_black_36dp,R.string.item_good);
+        DrawerData c= new DrawerData(R.drawable.ic_place_black_36dp,R.string.item_address);
         mData.add(c);
         DrawerData d = new DrawerData(R.drawable.ic_thumb_up_black_36dp,R.string.item_share);
         mData.add(d);
