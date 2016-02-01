@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.app.wuyang.myweather.data.AllCityOfChina;
 import com.app.wuyang.myweather.data.LocationInfo;
+import com.app.wuyang.myweather.data.WeatherInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,6 +128,26 @@ public class AllCityOfChinaHelper {
             }
             cursor.close();
             return areaId;
+        }
+        return null;
+    }
+
+    public List<AllCityOfChina> queryAreaIdByCity(String name){
+        List<AllCityOfChina> allCityOfChinaList=new ArrayList<>();
+
+        Cursor cursor =db.query("allCityOfChina",null,"county=?",
+                new String[]{name},null,null,null);
+        if (cursor!=null){
+            while (cursor.moveToNext()){
+                AllCityOfChina allCityOfChina =new AllCityOfChina();
+                allCityOfChina.setCity(cursor.getString(cursor.getColumnIndex("city")));
+                allCityOfChina.setCounty(cursor.getString(cursor.getColumnIndex("county")));
+                allCityOfChina.setProvince(cursor.getString(cursor.getColumnIndex("province")));
+                allCityOfChina.setAreaId(cursor.getLong(cursor.getColumnIndex("areaId")));
+                allCityOfChinaList.add(allCityOfChina);
+            }
+            cursor.close();
+            return allCityOfChinaList;
         }
         return null;
     }

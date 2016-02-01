@@ -2,10 +2,7 @@ package com.app.wuyang.myweather.asynctask;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.view.View;
-import android.widget.ProgressBar;
 
-import com.app.wuyang.myweather.activity.MainActivity;
 import com.app.wuyang.myweather.data.AirQuality;
 import com.app.wuyang.myweather.data.LocationInfo;
 import com.app.wuyang.myweather.data.WeatherIndex;
@@ -25,8 +22,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.app.wuyang.myweather.activity.MainActivity.*;
 
 /**
  * Created by wuyang on 16-1-8.

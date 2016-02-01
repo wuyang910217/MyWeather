@@ -1,5 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">我的天气</string>
+    <string name="detail_name">详细信息</string>
+    <string name="drawer_name">详细信息</string>
 
     <string name="open">Open</string>
     <string name="close">Close</string>
@@ -16,7 +18,7 @@
     <string name="item_weather">未来七天</string>
     <string name="item_address">详细地址</string>
     <string name="item_query">天气查询</string>
-    <string name="item_share">点赞</string>
+    <string name="item_air_quality">空气质量查询</string>
     <string name="item_setting">设置</string>
 
     <!-- layout_drawer-->
@@ -54,13 +56,37 @@
     <string name="detail_no2">二氧化氮含量</string>
     <string name="detail_co">一氧化碳含量</string>
 
+
     <string name="detail_county_name">县/区</string>
     <string name="detail_city_name">城市</string>
-    <string name="title_activity_query_another_city_weather">QueryAnotherCityWeatherActivity
-    </string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 
+    <!-- layout_show_address_fragment-->
+    <string name="address_county_name">县/区</string>
+    <string name="address_city_name">城市</string>
+    <string name="address_province_name">省份</string>
+    <string name="address_longitude_name">经度</string>
+    <string name="address_latitude_name">纬度</string>
+    <string name="address_name">地址</string>
+    <string name="address_city_code_name">区号</string>
+
+    <!-- layout_query_air_quality_Fragment-->
+    <string name="query_city_name">城市：</string>
+    <string name="query_city">市</string>
+    <string name="query_button">查询</string>
+    <string name="query_hint">请输入要查询的城市名</string>
+
+
+    <!-- layout_query_weather_dialog_view-->
+    <string name="query_quality_dialog_title">请输入城市名</string>
+    <string name="query_quality_dialog_hint">城市名</string>
+    <string name="query_quality_dialog_city">市</string>
+    <string name="query_weather_dialog_title">请输入城市名</string>
+    <string name="query_weather_dialog_hint">城市名</string>
+    <string name="query_weather_dialog_city">（市,县,区）</string>
+    <string name="query_dialog_btn_query">查询</string>
+    <string name="query_dialog_btn_cancel">取消</string>
 
 </resources>

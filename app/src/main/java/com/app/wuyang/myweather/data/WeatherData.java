@@ -1,11 +1,6 @@
 package com.app.wuyang.myweather.data;
 
-import com.app.wuyang.myweather.activity.MainActivity;
-import com.app.wuyang.myweather.db.DbQuery;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by wuyang on 16-1-22.

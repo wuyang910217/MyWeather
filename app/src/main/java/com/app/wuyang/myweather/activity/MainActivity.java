@@ -30,6 +30,7 @@ import com.app.wuyang.myweather.data.DrawerData;
 import com.app.wuyang.myweather.data.WeatherData;
 import com.app.wuyang.myweather.db.DbQuery;
 import com.app.wuyang.myweather.service.TimerService;
+import com.app.wuyang.myweather.utility.CheckConnect;
 import com.app.wuyang.myweather.utility.LogUtility;
 import com.app.wuyang.myweather.utility.SetImageUtility;
 import com.app.wuyang.myweather.utility.WeatherAboutUtils;
@@ -62,6 +63,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        LogUtility.d("abc", "现在进入到了。。。。" + getClass());
+
+//    有网 后台执行查询操作
+        CheckConnect checkConnect = new CheckConnect(getApplicationContext());
+        if (checkConnect.isConnect()){
+            HandleAirQualityAndWeatherTask task =new
+                    HandleAirQualityAndWeatherTask(MainActivity.this);
+            task.execute();
+        }
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBar mActionBar = getSupportActionBar();
         if (mActionBar != null) {
@@ -69,14 +80,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             mActionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        LogUtility.d("abc", "现在进入到了。。。。" + getClass());
-
         initData();
         initView();
 
-
-
-
+        LogUtility.d("abc","------------------------"+getPackageName());
         mDrawerList = (ListView) findViewById(R.id.item_list);
         mDrawerList.setAdapter(new DrawerAdapter(
                 MainActivity.this,
@@ -111,13 +118,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             circleImageView.setImageBitmap(bitmap);
         }
 
-
-
-        HandleAirQualityAndWeatherTask task =new
-                HandleAirQualityAndWeatherTask(MainActivity.this);
-        task.execute();
-
-
         showUiTask showUiTask =new showUiTask();
         showUiTask.execute();
     }
@@ -126,6 +126,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onPostResume() {
         super.onPostResume();
 
+//        IntentFilter filter =new IntentFilter();
+//        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+//        NetWorkReceiver receiver =new NetWorkReceiver();
+//        registerReceiver(receiver,filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
     @Override
@@ -160,8 +169,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
             Intent intent =new Intent(getApplicationContext(), TimerService.class);
-            intent.putExtra("enable",true);
-            startService(intent);
+            intent.putExtra("enable", true);
+//            startService(intent);
 
 
         }
@@ -290,9 +299,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         mData.add(a);
         DrawerData b = new DrawerData(R.drawable.ic_mood_black_36dp,R.string.item_query);
         mData.add(b);
-        DrawerData c= new DrawerData(R.drawable.ic_place_black_36dp,R.string.item_address);
+        DrawerData c = new DrawerData(R.drawable.ic_thumb_up_black_36dp,R.string.item_air_quality);
         mData.add(c);
-        DrawerData d = new DrawerData(R.drawable.ic_thumb_up_black_36dp,R.string.item_share);
+        DrawerData d= new DrawerData(R.drawable.ic_place_black_36dp,R.string.item_address);
         mData.add(d);
         DrawerData e = new DrawerData(R.drawable.ic_settings_black_36dp,R.string.item_setting);
         mData.add(e);
@@ -337,6 +346,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         }
         switch (item.getItemId()) {
+            case android.R.id.home:
+                LogUtility.d("abc","-------------"+getComponentName()+"android.R.id.home press");
+                break;
             case R.id.action_about:
                 Toast.makeText(this, "1111", Toast.LENGTH_SHORT).show();
                 break;

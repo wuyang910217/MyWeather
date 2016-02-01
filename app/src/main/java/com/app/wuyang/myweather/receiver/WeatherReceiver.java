@@ -78,6 +78,8 @@ public class WeatherReceiver extends BroadcastReceiver{
         qualityList.add(DbQuery.POLLUTION_LEVEL6);
     }
 
+
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     private void startQualityNotification(Context context) {
 

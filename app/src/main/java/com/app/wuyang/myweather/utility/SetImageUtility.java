@@ -9,7 +9,6 @@ import android.os.Environment;
 import android.provider.MediaStore;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * Created by wuyang on 16-1-22.

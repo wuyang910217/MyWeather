@@ -35,21 +35,24 @@ public class WeatherService extends Service implements AMapLocationListener{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         checkConnect =new CheckConnect(getApplicationContext());
-        if (!checkConnect.isConnect()){
-            LogUtility.d("abc", "WeatherService----over---没有网 准备进入weatherReceiver--");
-            sendBroadcast(new Intent("WEATHER_RECEIVER_NOTIFICATION"));
-        }else {
+        if (checkConnect.isConnect()){
             HandleAirQualityAndWeatherTask task =new HandleAirQualityAndWeatherTask(getApplicationContext());
             task.execute();
             initLocationClient();
 
             try {
-                Thread.sleep(3000);
+                Thread.sleep(5000);
                 LogUtility.d("abc", "WeatherService----over---准备进入weatherReceiver--");
                 sendBroadcast(new Intent("WEATHER_RECEIVER_NOTIFICATION"));
+//                stopSelf();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
+        }else {
+            LogUtility.d("abc", "WeatherService----over---没有网 准备进入weatherReceiver--");
+            sendBroadcast(new Intent("WEATHER_RECEIVER_NOTIFICATION"));
+            stopSelf();
         }
         return super.onStartCommand(intent, flags, startId);
     }

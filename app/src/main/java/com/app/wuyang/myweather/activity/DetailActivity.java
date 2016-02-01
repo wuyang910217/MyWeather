@@ -1,7 +1,7 @@
 package com.app.wuyang.myweather.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,17 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.app.wuyang.myweather.R;
-import com.app.wuyang.myweather.data.AirQuality;
-import com.app.wuyang.myweather.data.LocationInfo;
-import com.app.wuyang.myweather.data.WeatherIndex;
-import com.app.wuyang.myweather.data.WeatherInfo;
-import com.app.wuyang.myweather.db.AirQualityHelper;
 import com.app.wuyang.myweather.db.DbQuery;
-import com.app.wuyang.myweather.db.LocationInfoHelper;
-import com.app.wuyang.myweather.db.WeatherHelper;
-import com.app.wuyang.myweather.utility.WeatherTransformUtils;
-
-import java.util.List;
 
 
 /**
@@ -38,6 +28,12 @@ public class DetailActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_detail);
+
+        ActionBar mActionBar = getSupportActionBar();
+        if (mActionBar != null) {
+            mActionBar.setHomeButtonEnabled(true);
+            mActionBar.setDisplayHomeAsUpEnabled(true);
+        }
 
         initView();
 //        Intent intent =getIntent();
@@ -117,6 +113,9 @@ public class DetailActivity extends AppCompatActivity{
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
             case R.id.action_about:
                 Toast.makeText(this, "1111", Toast.LENGTH_SHORT).show();
                 break;

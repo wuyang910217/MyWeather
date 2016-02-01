@@ -11,9 +11,7 @@ import android.widget.TextView;
 
 import com.app.wuyang.myweather.R;
 import com.app.wuyang.myweather.data.WeatherData;
-import com.app.wuyang.myweather.db.DbQuery;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

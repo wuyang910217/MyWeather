@@ -6,30 +6,18 @@ android {
 
     defaultConfig {
         applicationId "com.app.wuyang.myweather"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
 
-    signingConfigs {
-        release {
-            storeFile file('/home/wuyang/AndroidStudioProjects/MyWeather/studio_sign_password.jks');
-            storePassword "881029"
-            keyAlias "wuyang"
-            keyPassword "881029"
-        }
-        debug {
-            storeFile file('/home/wuyang/AndroidStudioProjects/MyWeather/debug.keystore')
-            storePassword 'android'
-        }
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
 }
 
 dependencies {
