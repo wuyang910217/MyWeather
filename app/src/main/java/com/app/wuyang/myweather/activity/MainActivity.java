@@ -51,11 +51,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private TextView showTodayDate,showCityName,showQuality,showPm25,
             showPm10,showWeather,showTempMax,showTempMin,showWind,showWeatherIndex,showDetail;
     private ImageView showImage;
-    private CardView cardView;
+//    private CardView cardView;
     private CircleImageView circleImageView;
     private SetImageUtility imageUtility;
     public static final String DETAIL_ACTION_TODAY="DETAIL_ACTION_TODAY";
-    public static final String DETAIL_ACTION_OTHER="DETAIL_ACTION_OTHER";
+//    public static final String DETAIL_ACTION_OTHER="DETAIL_ACTION_OTHER";
 
 
     @Override
@@ -131,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //        NetWorkReceiver receiver =new NetWorkReceiver();
 //        registerReceiver(receiver,filter);
     }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -151,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         protected Void doInBackground(Void... params) {
             try {
                 LogUtility.d("abc","start------"+System.currentTimeMillis());
-                Thread.sleep(2000);
+                Thread.sleep(2300);
                 LogUtility.d("abc", "end-----" + System.currentTimeMillis());
             } catch (InterruptedException e) {
                 e.printStackTrace();
@@ -170,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             Intent intent =new Intent(getApplicationContext(), TimerService.class);
             intent.putExtra("enable", true);
-//            startService(intent);
+            startService(intent);
 
 
         }
@@ -227,11 +226,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             showTempMax.setVisibility(View.GONE);
         }
         showTempMax.setText("白天气温："+dbQuery.getTodayWeatherContent(DbQuery.TEMPERATURE_DAY));
-        showTempMin.setText("夜晚气温："+dbQuery.getTodayWeatherContent(DbQuery.TEMPERATURE_NIGHT));
+        showTempMin.setText("夜晚气温：" + dbQuery.getTodayWeatherContent(DbQuery.TEMPERATURE_NIGHT));
         showWind.setText(dbQuery.getTodayWeatherContent(DbQuery.WIND_DIRECTION_DAY)
                 + "  " + dbQuery.getTodayWeatherContent(DbQuery.WIND_POWER_DAY));
         showImage.setImageResource(dbQuery.getWeatherImage());
-        showDetail.setText(R.string.show_detail);
+        String publish_time=dbQuery.getTodayWeatherContent(DbQuery.PUBLISH_TIME_FULL);
+        showDetail.setText("天气更新时间："+publish_time);
         showWeatherIndex.setText(dbQuery.getWeatherIndexClothContent(DbQuery.WEATHER_INDEX_INFO));
         String quality= dbQuery.getAirQualityContent(DbQuery.QUALITY);
         showQuality.setText(dbQuery.getAirQualityLevel(quality));
@@ -295,15 +295,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
     }
     private void initData() {
-        DrawerData a= new DrawerData(R.drawable.ic_wb_sunny_red_24dp,R.string.item_weather);
+        DrawerData a= new DrawerData(R.drawable.ic_mood_black_24dp,R.string.item_weather);
         mData.add(a);
-        DrawerData b = new DrawerData(R.drawable.ic_mood_black_36dp,R.string.item_query);
+        DrawerData b = new DrawerData(R.drawable.ic_wb_sunny_black_24dp,R.string.item_query);
         mData.add(b);
-        DrawerData c = new DrawerData(R.drawable.ic_thumb_up_black_36dp,R.string.item_air_quality);
+        DrawerData c = new DrawerData(R.drawable.ic_grain_black_24dp,R.string.item_air_quality);
         mData.add(c);
-        DrawerData d= new DrawerData(R.drawable.ic_place_black_36dp,R.string.item_address);
+        DrawerData d= new DrawerData(R.drawable.ic_place_black_24dp,R.string.item_address);
         mData.add(d);
-        DrawerData e = new DrawerData(R.drawable.ic_settings_black_36dp,R.string.item_setting);
+        DrawerData e = new DrawerData(R.drawable.ic_settings_black_24dp,R.string.item_setting);
         mData.add(e);
     }
 
@@ -350,7 +350,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 LogUtility.d("abc","-------------"+getComponentName()+"android.R.id.home press");
                 break;
             case R.id.action_about:
-                Toast.makeText(this, "1111", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this,AboutActivity.class));
                 break;
             case R.id.action_exit:
                 finish();

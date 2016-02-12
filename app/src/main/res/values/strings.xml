@@ -5,7 +5,7 @@
 
     <string name="open">Open</string>
     <string name="close">Close</string>
-    <string name="show_detail">查看详细信息</string>
+    <string name="show_detail_date">天气更新时间：</string>
 
 <!--layout_splash-->
     <string name="splash_title">我的天气</string>
@@ -89,4 +89,7 @@
     <string name="query_dialog_btn_query">查询</string>
     <string name="query_dialog_btn_cancel">取消</string>
 
+
+    <string name="setting_switch">允许后台每隔一段时间查询空气质量，并通知</string>
+    <string name="setting_text">设置</string>
 </resources>

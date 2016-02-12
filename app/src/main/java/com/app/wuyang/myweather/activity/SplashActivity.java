@@ -86,7 +86,7 @@ public class SplashActivity extends AppCompatActivity implements AMapLocationLis
         if (aMapLocation != null) {
             HandleLocationTask task =new HandleLocationTask(getApplicationContext());
             task.execute(aMapLocation);
-            mapLocationClient.stopLocation();
+//            mapLocationClient.stopLocation();
         }
 
     }

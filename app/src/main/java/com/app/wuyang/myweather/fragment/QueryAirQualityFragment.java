@@ -1,5 +1,6 @@
 package com.app.wuyang.myweather.fragment;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -35,7 +37,6 @@ import java.util.List;
 public class QueryAirQualityFragment extends Fragment {
     private AlertDialog alertDialog;
     private EditText dialog_quality_input;
-    private FrameLayout query_frameLayout;
     private ProgressBar query_progress_bar;
     private TextView query_air_quality_area,query_air_quality,query_pollutant,query_pm25,
             query_pm10,query_o3,query_so2,query_no2,query_co,query_time;
@@ -56,13 +57,17 @@ public class QueryAirQualityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.layout_query_air_quality_fragment, container, false);
         initView(view);
+        showInputMethod(getContext(), view);
         showDialog();
-
         return view;
     }
 
+    private void showInputMethod(Context context,View view){
+        InputMethodManager im = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        im.showSoftInput(view, 0);
+    }
+
     private void initView(View view){
-        query_frameLayout = (FrameLayout) view.findViewById(R.id.query_frameLayout);
         query_progress_bar = (ProgressBar) view.findViewById(R.id.query_progress_bar);
         query_air_quality = (TextView) view.findViewById(R.id.query_air_quality);
         query_air_quality_area = (TextView) view.findViewById(R.id.query_air_quality_area);
@@ -81,7 +86,7 @@ public class QueryAirQualityFragment extends Fragment {
 
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
         dialog.setCancelable(true);
-        dialog.setIcon(R.drawable.ic_wb_sunny_black_24dp);
+        dialog.setIcon(R.drawable.ic_grain_black_24dp);
         dialog.setTitle(R.string.query_quality_dialog_title);
         dialog.setView(view);
 
@@ -107,7 +112,6 @@ public class QueryAirQualityFragment extends Fragment {
                 List<String> list =airQualityHelper.loadCity();
                 if (city.length()==0){
                     Toast.makeText(getContext(),"请输入要查询的城市名",Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 if (list==null || list.size()==0){
                     Toast.makeText(getContext(),"查询失败，请稍后重试",Toast.LENGTH_SHORT).show();
@@ -133,11 +137,12 @@ public class QueryAirQualityFragment extends Fragment {
         protected void onPostExecute(AirQuality airQuality) {
             super.onPostExecute(airQuality);
             query_progress_bar.setVisibility(View.GONE);
-            if (airQuality==null){
-                Toast.makeText(getContext(),"查询失败，请稍后再试",Toast.LENGTH_SHORT).show();
-            }else {
-                query_frameLayout.setVisibility(View.VISIBLE);
+            if (airQuality!=null){
+                LogUtility.d("abc", "--------------查询成功 准备显示出来");
                 setView(airQuality);
+            }else {
+                LogUtility.d("abc","--------------查询失败");
+                Toast.makeText(getContext(),"查询失败，请稍后再试",Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -146,34 +151,35 @@ public class QueryAirQualityFragment extends Fragment {
             String cityName =params[0];
             AirQualityHelper airQualityHelper =AirQualityHelper.getInstance(getContext());
             List<String> list =airQualityHelper.loadCity();
-            if (list==null || list.size()==0){
-                return null;
-            }
-            if (list.contains(cityName)){
-                try {
-                    String encodeCity = URLEncoder.encode(cityName, "utf-8");
-                    String urlPath= URL_PATH+encodeCity+URL_TOKEN;
-                    return getAirQuality(urlPath);
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+            if (list!=null && list.size()!=0){
+                if (list.contains(cityName)){
+                    LogUtility.d("abc", "--------------do in background ");
+                    try {
+                        String encodeCity = URLEncoder.encode(cityName, "utf-8");
+                        String urlPath= URL_PATH+encodeCity+URL_TOKEN;
+                        return getAirQuality(urlPath);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+            LogUtility.d("abc", "--------------do in background  说明没有airquality数据 返回null ");
             return null;
         }
     }
 
     private void setView(AirQuality airQuality) {
-        query_air_quality.setText(airQuality.getQuality());
-        query_pollutant.setText(airQuality.getPollutant());
-        query_air_quality_area.setText(airQuality.getCity());
-        query_co.setText(""+airQuality.getCo());
-        query_no2.setText(airQuality.getNo2());
-        query_so2.setText(airQuality.getSo2());
-        query_o3.setText(airQuality.getO3());
-        query_pm10.setText(airQuality.getPm10());
-        query_pm25.setText(airQuality.getPm25());
+        query_air_quality.setText("空气质量：         " +airQuality.getQuality());
+        query_pollutant.setText("首要污染物：      " +airQuality.getPollutant());
+        query_air_quality_area.setText("城市名称：         " +airQuality.getCity());
+        query_co.setText("一氧化碳含量：   " + airQuality.getCo());
+        query_no2.setText("二氧化氮含量：   "+airQuality.getNo2());
+        query_so2.setText("二氧化硫含量：   "+airQuality.getSo2());
+        query_o3.setText("臭氧含量：         "+airQuality.getO3());
+        query_pm10.setText("Pm10含量：      "+airQuality.getPm10());
+        query_pm25.setText("Pm2.5含量：     "+airQuality.getPm25());
         String time=airQuality.getTime();
-        query_time.setText(time.substring(11,16));
+        query_time.setText("发布时间：         "+time.substring(11,16));
     }
 
     private AirQuality getAirQuality(String urlPath){

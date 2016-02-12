@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:gravity="center"
               android:layout_gravity="center"
+              android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <TextView
+        android:textSize="16sp"
+        android:gravity="center"
+        android:paddingTop="15dp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:id="@+id/text_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <ProgressBar
         android:id="@+id/query_weather_progressBar"
         android:visibility="gone"
@@ -13,6 +21,7 @@
         android:layout_height="wrap_content"/>
 
     <FrameLayout
+        android:paddingTop="10dp"
         android:id="@+id/query_weather_frameLayout"
         android:visibility="gone"
         android:layout_width="match_parent"

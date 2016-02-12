@@ -1,5 +1,6 @@
 package com.app.wuyang.myweather.fragment;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -44,6 +46,7 @@ public class QueryWeatherFragment extends Fragment {
     private ProgressBar query_weather_progressBar;
     private FrameLayout query_weather_frameLayout;
     private ListView query_weather_listView;
+    private TextView text_city;
     private List<WeatherData> dataList=new ArrayList<>();
 
     @Override
@@ -60,10 +63,18 @@ public class QueryWeatherFragment extends Fragment {
         View view=inflater.inflate(R.layout.layout_query_weather_fragment, container, false);
         initView(view);
         showDialog();
+        showInputMethod(getContext(),view);
         return view;
     }
 
+    private void showInputMethod(Context context,View view){
+        LogUtility.d("abc","---------------------showInputMethod");
+        InputMethodManager im = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        im.showSoftInput(view,0);
+    }
+
     private void initView(View view){
+        text_city= (TextView) view.findViewById(R.id.text_city);
         query_weather_progressBar= (ProgressBar) view.findViewById(R.id.query_weather_progressBar);
         query_weather_frameLayout= (FrameLayout) view.findViewById(R.id.query_weather_frameLayout);
         query_weather_listView = (ListView) view.findViewById(R.id.query_weather_listView);
@@ -101,9 +112,19 @@ public class QueryWeatherFragment extends Fragment {
             WeatherAboutUtils aboutUtils =new WeatherAboutUtils();
             WeatherTransformUtils transformUtils =new WeatherTransformUtils();
 
-            String weatherDay =weatherInfoList.get(0).getWeather_day();
-            String windDirect =weatherInfoList.get(0).getWind_direction_day();
-            String windPower =weatherInfoList.get(0).getWind_power_day();
+            String weatherDay;
+            String windDirect;
+            String windPower;
+            if (aboutUtils.isNight()){
+                weatherDay =weatherInfoList.get(0).getWeather_night();
+                windDirect =weatherInfoList.get(0).getWind_direction_night();
+                windPower =weatherInfoList.get(0).getWind_power_night();
+            } else {
+                weatherDay =weatherInfoList.get(0).getWeather_day();
+                windDirect =weatherInfoList.get(0).getWind_direction_day();
+                windPower =weatherInfoList.get(0).getWind_power_day();
+            }
+
             String tempDay=weatherInfoList.get(0).getTemperature_day();
             String tempNight=weatherInfoList.get(0).getTemperature_night();
             String dateShow =aboutUtils.getFriendDate();
@@ -155,7 +176,7 @@ public class QueryWeatherFragment extends Fragment {
         protected List<WeatherInfo> doInBackground(String... params) {
             LogUtility.d("abc","------------------------"+"start QueryWeatherTask");
 
-            String city =params[0];
+            String city = params[0];
             Long areaId=getAreaId(city);
             WeatherAboutUtils weatherAboutUtils =new WeatherAboutUtils();
             String weatherForecastUrl = weatherAboutUtils.getUrl(areaId, "forecast_v");
@@ -200,9 +221,20 @@ public class QueryWeatherFragment extends Fragment {
                     alertDialog.cancel();
                     QueryWeatherTask task =new QueryWeatherTask();
                     task.execute(city);
+                    setText(city);
                 }
             }
         });
+    }
+    private void setText(String city){
+        List<AllCityOfChina> chinaList1 = cityOfChinaHelper.queryAreaIdByCity(city);
+        if (chinaList1!=null && chinaList1.size()!=0){
+            text_city.setVisibility(View.VISIBLE);
+            LogUtility.d("abc",chinaList1.get(0).getCounty()+"--->"+
+                    chinaList1.get(0).getCity()+"--->"+chinaList1.get(0).getProvince());
+            text_city.setText(chinaList1.get(0).getCounty() + "--->" +
+                    chinaList1.get(0).getCity() + "--->" + chinaList1.get(0).getProvince());
+        }
     }
 
     private Long getAreaId(String city){
@@ -211,7 +243,6 @@ public class QueryWeatherFragment extends Fragment {
 //        List<AllCityOfChina> chinaList2=cityOfChinaHelper.queryAreaIdByCity(newCity);
 
         List<AllCityOfChina> chinaList1 = cityOfChinaHelper.queryAreaIdByCity(city);
-
 
         if (stringList==null || stringList.size()==0){
             LogUtility.d("abc","说明省市县数据库中没有数据。。。直接返回");

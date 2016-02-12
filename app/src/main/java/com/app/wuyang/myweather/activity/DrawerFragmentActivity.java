@@ -1,5 +1,6 @@
 package com.app.wuyang.myweather.activity;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -14,6 +15,7 @@ import com.app.wuyang.myweather.R;
 import com.app.wuyang.myweather.fragment.QueryAirQualityFragment;
 import com.app.wuyang.myweather.fragment.QueryWeatherFragment;
 import com.app.wuyang.myweather.fragment.SettingFragment;
+import com.app.wuyang.myweather.fragment.SettingPreferenceFragment;
 import com.app.wuyang.myweather.fragment.ShowAddressFragment;
 import com.app.wuyang.myweather.fragment.ShowSevenDayWeatherFragment;
 import com.app.wuyang.myweather.utility.LogUtility;
@@ -74,7 +76,7 @@ public class DrawerFragmentActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_about:
-                Toast.makeText(this, "1111", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.action_exit:
                 LogUtility.d("abc", "----------" + getComponentName() + "action_exit");

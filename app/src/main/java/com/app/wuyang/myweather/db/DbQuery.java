@@ -56,6 +56,7 @@ public class DbQuery {
     public static final String TODAY_AFTER_TOMORROW="today_after_tomorrow";
 
     public static final String PUBLISH_TIME="publish_time";
+    public static final String PUBLISH_TIME_FULL="publish_time_full";
     public static final String WEATHER_DAY="weather_day";
     public static final String WEATHER_NIGHT="weather_night";
     public static final String TEMPERATURE_DAY="temperature_day";
@@ -268,9 +269,16 @@ public class DbQuery {
                     return weatherInfoList.get(0).getTemperature_night()+"℃";
                 case PUBLISH_TIME:
                     String publish_time =weatherInfoList.get(0).getPublish_time();
-                    String publish1=publish_time.substring(8, 10);
-                    String publish2=publish_time.substring(10);
-                    return publish1+":"+publish2;
+                    String publish_hour=publish_time.substring(8, 10);
+                    String publish_minute=publish_time.substring(10);
+                    return publish_hour+":"+publish_minute;
+                case PUBLISH_TIME_FULL:
+                    String publish_time_full =weatherInfoList.get(0).getPublish_time();
+                    String publish_time_month =publish_time_full.substring(4,6);
+                    String publish_time_day =publish_time_full.substring(6,8);
+                    String publish_time_hour=publish_time_full.substring(8, 10);
+                    String publish_time_minute=publish_time_full.substring(10);
+                    return publish_time_month+"月"+publish_time_day+"日 "+publish_time_hour+":"+publish_time_minute;
                 case WIND_POWER_DAY:
                     if (aboutUtils.isNight()){
                         return transformUtils.tranWindPower(

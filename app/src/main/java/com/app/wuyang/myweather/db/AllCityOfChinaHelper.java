@@ -62,10 +62,13 @@ public class AllCityOfChinaHelper {
 //    也就是可能会出错，返回不是当前城市的areaId;(可以通过限定 省的条件解决)
 //    这里目前先假定只会返回一个数据。
     public Long getAreaIdByCity(LocationInfo locationInfo) {
+        if (locationInfo==null){
+            return null;
+        }
         String city = locationInfo.getNewCity();
         String province =locationInfo.getNewProvince();
         Cursor cursor = db.query("allCityOfChina",
-                new String[]{"areaId", "county"}, "county=? and province=?",
+                null, "county=? and province=?",
                 new String[]{city,province}, null, null, null);
         Long areaId = null;
         if (cursor!= null) {

@@ -32,18 +32,18 @@ public class WeatherAboutUtils {
     }
 
     public String getFriendDate(){
-        SimpleDateFormat dateFormat =new SimpleDateFormat("MM-dd EEEE", Locale.CHINA);
+        SimpleDateFormat dateFormat =new SimpleDateFormat("MM/dd EEEE", Locale.CHINA);
         return dateFormat.format(new Date());
     }
     public String getFriendDateTomorrow(){
         Long tomorrowTime=System.currentTimeMillis()+24*60*60*1000;
-        SimpleDateFormat dateFormat =new SimpleDateFormat("MM-dd EEEE", Locale.CHINA);
+        SimpleDateFormat dateFormat =new SimpleDateFormat("MM/dd EEEE", Locale.CHINA);
         return dateFormat.format(new Date(tomorrowTime));
     }
 
     public String getFriendDateTodayAfterTomorrow(){
         Long todayAfterTomorrowTime=System.currentTimeMillis()+2*24*60*60*1000;
-        SimpleDateFormat dateFormat =new SimpleDateFormat("MM-dd EEEE", Locale.CHINA);
+        SimpleDateFormat dateFormat =new SimpleDateFormat("MM/dd EEEE", Locale.CHINA);
         return dateFormat.format(new Date(todayAfterTomorrowTime));
     }
 

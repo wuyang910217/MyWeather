@@ -39,6 +39,7 @@
             android:name="com.app.wuyang.myweather.activity.DrawerFragmentActivity"
             android:label="@string/app_name" >
         </activity>
+        <activity android:name=".activity.AboutActivity"/>
 
         <activity
             android:name="com.app.wuyang.myweather.activity.SplashActivity"

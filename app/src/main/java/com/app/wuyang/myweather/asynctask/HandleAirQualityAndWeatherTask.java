@@ -73,34 +73,32 @@ public class HandleAirQualityAndWeatherTask extends AsyncTask<Void,Void,Void>{
         long startTime=System.currentTimeMillis();
 
         LocationInfo locationInfo =locationInfoHelper.loadLocationInfo();
-        if (locationInfo==null){
-            LogUtility.d("abc","说明此时定位信息还没有存到数据库，直接返回。。。。。可能没网--定位失败");
-            return null;
-        }
-        LogUtility.d("abc","从定位得到的数据库中取出信息。。。。。。。。。");
+        if (locationInfo!=null){
+            LogUtility.d("abc","从定位得到的数据库中取出信息。。。。。。。。。");
 
 //        解析出url地址
-        String urlPath = getUrlPath(locationInfo);
+            String urlPath = getUrlPath(locationInfo);
 //        把空气质量信息存入到数据库
-        saveAirQualityToDb(urlPath);
+            saveAirQualityToDb(urlPath);
 //       得到定位县级或市级的城市Id 用于获取天气信息；
-        Long areaId= getAreaId(locationInfo);
+            Long areaId= getAreaId(locationInfo);
 //        得到url地址
-        WeatherAboutUtils weatherAboutUtils =new WeatherAboutUtils();
-        String weatherForecastUrl = weatherAboutUtils.getUrl(areaId, TYPE_FORECAST);
-        String weatherIndexUrl = weatherAboutUtils.getUrl(areaId, TYPE_INDEX);
+            WeatherAboutUtils weatherAboutUtils =new WeatherAboutUtils();
+            String weatherForecastUrl = weatherAboutUtils.getUrl(areaId, TYPE_FORECAST);
+            String weatherIndexUrl = weatherAboutUtils.getUrl(areaId, TYPE_INDEX);
 //        把天气信息存入到数据库
-        saveWeatherInfoToDb(weatherForecastUrl);
+            saveWeatherInfoToDb(weatherForecastUrl);
 //         把天气指数信息存入到数据库
-        saveWeatherIndexToDb(weatherIndexUrl);
+            saveWeatherIndexToDb(weatherIndexUrl);
 
-        testInfo();
+            testInfo();
 
-        long endTime = System.currentTimeMillis();
-        LogUtility.d("abc", "在HandleAirQualityAndWeatherTask------------------ 执行共耗时："
-                + (endTime - startTime) + "ms");
-
+            long endTime = System.currentTimeMillis();
+            LogUtility.d("abc", "在HandleAirQualityAndWeatherTask------------------ 执行共耗时："
+                    + (endTime - startTime) + "ms");
+        }
         return null;
+
     }
 
     private void testInfo(){

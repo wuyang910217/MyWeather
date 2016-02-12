@@ -113,8 +113,9 @@ public class AirQualityHelper {
             } while (cursor.moveToNext());
             cursor.close();
             return airQualities;
+        } else {
+            return null;
         }
-        return null;
     }
 
 

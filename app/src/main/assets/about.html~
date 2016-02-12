@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>关于 我的天气1.0</title>
+</head>
+<body>
+	<div class="container">
+<div class="software">
+		<h3>关于软件</h3>	
+<p>这是一款简单的预报天气的软件，能够提供全国主要城市空气质量信息和全国县级及以上城市的三天天气预报信息。源码见github：</p>
+<a href="www.baidu.com">地址</a>
+		</div>
+		<div class="author">
+			<h3>关于作者</h3>
+<p>网名wuyang，目前正在自学Android开发，这是我开发的第一款Android App，功能比较简单，欢迎大家批评，希求共同进步。我的微信号：wu---yang，邮箱地址：wuyang910217@gmail.com</p>
+		</div>
+		
+		<div class="function">
+			<h3>功能介绍</h3>
+		</div>
+		<div class="guide">
+			<h3>使用指南</h3>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.app.wuyang.myweather.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +23,7 @@ public class DetailActivity extends AppCompatActivity{
             detail_publish_time,detail_air_quality,detail_pollutant,detail_pm25,detail_pm10,
             detail_o3,detail_so2,detail_no2,detail_co,detail_county_name,detail_city_name;
 
-    private static final String WEATHER_NOTIFICATION="WEATHER_NOTIFICATION";
+//    private static final String WEATHER_NOTIFICATION="WEATHER_NOTIFICATION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +74,9 @@ public class DetailActivity extends AppCompatActivity{
         detail_city_name= (TextView) findViewById(R.id.detail_city_name);
     }
 
-    private void showDetailOther() {
-
-    }
+//    private void showDetailOther() {
+//
+//    }
 
     private void showDetailToday() {
         DbQuery dbQuery=new DbQuery(this);
@@ -117,7 +118,7 @@ public class DetailActivity extends AppCompatActivity{
                 finish();
                 break;
             case R.id.action_about:
-                Toast.makeText(this, "1111", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(this, AboutActivity.class));
                 break;
             case R.id.action_exit:
                 finish();
