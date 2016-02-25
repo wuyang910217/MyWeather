@@ -199,7 +199,7 @@ public class QueryWeatherFragment extends Fragment {
 
         alertDialog = dialog.create();
         alertDialog.show();
-        alertDialog.getWindow().setLayout(900, 550);
+//        alertDialog.getWindow().setLayout(900, 550);
 
         Button dialog_btn_cancel = (Button) dialogView.findViewById(R.id.dialog_cancel);
         Button dialog_btn_confirm = (Button) dialogView.findViewById(R.id.dialog_confirm);

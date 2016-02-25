@@ -92,7 +92,7 @@ public class QueryAirQualityFragment extends Fragment {
 
         alertDialog =dialog.create();
         alertDialog.show();
-        alertDialog.getWindow().setLayout(850, 550);
+//        alertDialog.getWindow().setLayout(850, 550);
 
         Button dialog_btn_cancel = (Button) view.findViewById(R.id.dialog_cancel);
         Button dialog_btn_confirm = (Button) view.findViewById(R.id.dialog_confirm);

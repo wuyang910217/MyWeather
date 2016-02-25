@@ -12,12 +12,16 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -249,12 +253,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case 0:
-                        Intent intent=imageUtility.chooseFromAlbum();
+                        Intent intent = imageUtility.chooseFromAlbum();
                         startActivityForResult(intent,
                                 SetImageUtility.CHOOSE_PHOTO);
                         break;
                     case 1:
-                        Intent intent1 =imageUtility.takePhoto();
+                        Intent intent1 = imageUtility.takePhoto();
                         startActivityForResult(intent1,
                                 SetImageUtility.TAKE_PHOTO);
                         break;
@@ -263,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
         AlertDialog alertDialog =dialog.create();
         alertDialog.show();
-        alertDialog.getWindow().setLayout(800, 500);
+//        alertDialog.getWindow().setLayout(800, 500);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -356,13 +360,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 finish();
                 break;
             case R.id.action_refresh:
-//                ActionMenuView action_refresh= (ActionMenuView) findViewById(R.id.action_refresh);
+//                refresh(item);
                 Toast.makeText(this, "1111", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refresh(MenuItem item){
+        ImageView imageView = (ImageView) getLayoutInflater().inflate(R.layout.layout_refresh_view, null);
+        Animation rotation = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.refresh_action);
+        item.setActionView(imageView);
+        imageView.startAnimation(rotation);
+
+//        item.getActionView().clearAnimation();
+//        item.setActionView(null);
     }
 
 }

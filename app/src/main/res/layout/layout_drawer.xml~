@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <FrameLayout
+        android:layout_marginBottom="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@color/app_main_color">
+
+        <com.app.wuyang.myweather.CircleImageView
+            android:id="@+id/circleImage"
+            android:onClick="showCircleImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            app:civ_border_color="#ffffff"
+            app:civ_border_width="2dp"
+            android:src="@drawable/camera"
+            />
+
+
+        <!--<TextView-->
+            <!--android:onClick="openDetail"-->
+            <!--android:text="@string/drawer_textView"-->
+            <!--android:textSize="35sp"-->
+            <!--android:padding="2dp"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="150dp"/>-->
+
+    </FrameLayout>
+
+
+    <ListView
+        android:divider="@color/divider_color"
+        android:dividerHeight="2dp"
+        android:id="@+id/item_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+</LinearLayout>

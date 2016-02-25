@@ -71,7 +71,6 @@ public class WeatherReceiver extends BroadcastReceiver{
     }
     private void initData(){
         qualityList =new ArrayList<>();
-        qualityList.add(DbQuery.POLLUTION_LEVEL2);
         qualityList.add(DbQuery.POLLUTION_LEVEL3);
         qualityList.add(DbQuery.POLLUTION_LEVEL4);
         qualityList.add(DbQuery.POLLUTION_LEVEL5);

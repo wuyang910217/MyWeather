@@ -4,6 +4,16 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
+    <TextView
+        android:padding="3dp"
+        android:background="@color/app_main_color"
+        android:textColor="@color/white_color"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/titleUrl"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"/>
     <WebView
         android:id="@+id/webViewAbout"
         android:layout_width="match_parent"
